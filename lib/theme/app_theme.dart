@@ -87,7 +87,7 @@ class AppTheme {
         color: Colors.white,
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: surface,
       elevation: 2.0,
       shadowColor: shadowLight,
@@ -260,7 +260,7 @@ class AppTheme {
       trackHeight: 4,
       thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
     ),
-    tabBarTheme: const TabBarTheme(
+    tabBarTheme: const TabBarThemeData(
       labelColor: primary,
       unselectedLabelColor: textSecondary,
       indicatorColor: primary,
@@ -324,7 +324,7 @@ class AppTheme {
         side: BorderSide(color: border),
       ),
     ),
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: background,
       elevation: 8,
       shape: RoundedRectangleBorder(
