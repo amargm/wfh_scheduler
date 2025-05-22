@@ -19,6 +19,7 @@ class _PreferencesSetupScreenState extends State<PreferencesSetupScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _showAdvancedOptions = false;
+  int _selectedIndex = 3; // Set the selected index to 3 for the settings tab
   
   // Form values
   double _targetWfoPercentage = 60;
@@ -304,7 +305,100 @@ class _PreferencesSetupScreenState extends State<PreferencesSetupScreen> {
                 ),
               ),
             ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onBottomNavTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'home',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'home',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'calendar_today',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'calendar_today',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Schedule',
+          ),
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'sync',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'sync',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Sync',
+          ),
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'settings',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'settings',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Settings',
+          ),
+        ],
+      ),
     );
+  }
+
+  void _onBottomNavTapped(int index) {
+    if (index == _selectedIndex) return;
+    
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/home-dashboard-screen',
+          (route) => false,
+        );
+        break;
+      case 1:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/schedule-optimization-screen',
+          (route) => false,
+        );
+        break;
+      case 2:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/calendar-sync-screen',
+          (route) => false,
+        );
+        break;
+      case 3:
+        // Already on preferences screen
+        break;
+    }
+    
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   Widget _buildTargetWfoSection() {

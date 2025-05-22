@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -26,6 +25,7 @@ class _ScheduleOptimizationScreenState extends State<ScheduleOptimizationScreen>
   final Map<DateTime, String> _suggestedSchedule = {};
   final Map<DateTime, String> _confirmedSchedule = {};
   final Map<DateTime, Map<String, dynamic>> _weatherData = {};
+  int _selectedIndex = 1; // Set the selected index to 1 for the schedule tab
 
   @override
   void initState() {
@@ -424,7 +424,7 @@ class _ScheduleOptimizationScreenState extends State<ScheduleOptimizationScreen>
                   SizedBox(height: 3.h),
                   
                   // Weather Forecast Section
-                  if (_hasWeatherData) ...[
+                  if (_hasWeatherData) ...[                 
                     Text(
                       'Weather Forecast',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -448,7 +448,100 @@ class _ScheduleOptimizationScreenState extends State<ScheduleOptimizationScreen>
                 ],
               ),
             ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onBottomNavTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'home',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'home',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'calendar_today',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'calendar_today',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Schedule',
+          ),
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'sync',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'sync',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Sync',
+          ),
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'settings',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'settings',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Settings',
+          ),
+        ],
+      ),
     );
+  }
+
+  void _onBottomNavTapped(int index) {
+    if (index == _selectedIndex) return;
+    
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/home-dashboard-screen',
+          (route) => false,
+        );
+        break;
+      case 1:
+        // Already on schedule screen
+        break;
+      case 2:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/calendar-sync-screen',
+          (route) => false,
+        );
+        break;
+      case 3:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/preferences-setup-screen',
+          (route) => false,
+        );
+        break;
+    }
+    
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   Widget _buildHeader() {

@@ -20,6 +20,7 @@ class _CalendarSyncScreenState extends State<CalendarSyncScreen> {
   DateTime? _lastSyncTime;
   String _syncStatus = 'none'; // 'none', 'success', 'error'
   String? _errorMessage;
+  int _selectedIndex = 2; // Set the selected index to 2 for the sync tab
 
   // Calendar connection status
   final Map<String, bool> _connectedCalendars = {
@@ -368,7 +369,100 @@ class _CalendarSyncScreenState extends State<CalendarSyncScreen> {
                 ],
               ),
             ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onBottomNavTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'home',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'home',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'calendar_today',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'calendar_today',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Schedule',
+          ),
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'sync',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'sync',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Sync',
+          ),
+          BottomNavigationBarItem(
+            icon: CustomIconWidget(
+              iconName: 'settings',
+              color: AppTheme.textSecondary,
+              size: 24,
+            ),
+            activeIcon: CustomIconWidget(
+              iconName: 'settings',
+              color: AppTheme.primary,
+              size: 24,
+            ),
+            label: 'Settings',
+          ),
+        ],
+      ),
     );
+  }
+
+  void _onBottomNavTapped(int index) {
+    if (index == _selectedIndex) return;
+    
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/home-dashboard-screen',
+          (route) => false,
+        );
+        break;
+      case 1:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/schedule-optimization-screen',
+          (route) => false,
+        );
+        break;
+      case 2:
+        // Already on sync screen
+        break;
+      case 3:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/preferences-setup-screen',
+          (route) => false,
+        );
+        break;
+    }
+    
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   Widget _buildNavigationOptions() {

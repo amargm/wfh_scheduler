@@ -633,27 +633,27 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
   }
 
   void _onBottomNavTapped(int index) {
-    if (index == _selectedIndex) return;
-    
-    switch (index) {
-      case 0:
-        // Already on home screen
-        break;
-      case 1:
-        Navigator.pushNamed(context, '/schedule-optimization-screen');
-        break;
-      case 2:
-        Navigator.pushNamed(context, '/calendar-sync-screen');
-        break;
-      case 3:
-        Navigator.pushNamed(context, '/preferences-setup-screen');
-        break;
-    }
-    
-    setState(() {
-      _selectedIndex = index;
-    });
+  if (index == _selectedIndex) return;
+  
+  switch (index) {
+    case 0:
+      // Already on home screen
+      break;
+    case 1:
+      Navigator.pushNamed(context, '/schedule-optimization-screen');
+      break;
+    case 2:
+      Navigator.pushNamed(context, '/calendar-sync-screen');
+      break;
+    case 3:
+      Navigator.pushNamed(context, '/preferences-setup-screen');
+      break;
   }
+  
+  setState(() {
+    _selectedIndex = index;
+  });
+}
 
   void _changeMonth(int monthOffset) {
     setState(() {
